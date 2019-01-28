@@ -32,6 +32,13 @@ const userSchema = new mongoose.Schema({
   },
   token: {
       type: String
+  },
+  messages: {
+      type: mongoose.Schema.Types.ObjectId //puede ser que no este bien este objectId
+  }
+  ,
+  favorites: {
+      type: mongoose.Schema.Types.ObjectId
   }
 }, { timestamps: true });
 

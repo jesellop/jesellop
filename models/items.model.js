@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const SALT_WORK_FACTOR = 10;
 //const FIRST_ADMIN_EMAIL = process.env.FIRST_ADMIN_EMAIL;
 
-const userSchema = new mongoose.Schema({
+const itemSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: 'Price is required'
@@ -26,11 +26,11 @@ const userSchema = new mongoose.Schema({
       coordinates: [Number]
   }, 
   owner: {
-    type: String
+    type: ObjectId //revisar esta linea
   }
 }, { timestamps: true });
 
-userSchema.pre('save', function(next) {
+itemSchema.pre('save', function(next) {
     if (this.email === FIRST_ADMIN_EMAIL) {
       this.role = constants.ROLE_ADMIN;
     }
@@ -50,9 +50,9 @@ userSchema.pre('save', function(next) {
     }
   });
   
-  userSchema.methods.checkPassword = function(password) {
+  itemSchema.methods.checkPassword = function(password) {
     return bcrypt.compare(password, this.password);
   }
   
-  const User = mongoose.model('User', userSchema);
-  module.exports = User;
+  const Item = mongoose.model('Item', itemSchema);
+  module.exports = Item;
