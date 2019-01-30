@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
-//const usersController = require('../controllers/users.controller');
+const itemsController = require('../controllers/items.controller');
 //const authMiddleware = require('../middlewares/auth.middleware');
 
 
-router.get('/items', itemsController.list);
+//router.get('/items', itemsController.list);
 
-router.get('/items/create', itemsController.create);
-router.post('/items/create', itemsController.doCreate);
+router.get('/create', itemsController.create);
+router.post('/create', itemsController.doCreate);
 
-router.get('/items/:id', itemsController.get);
-router.post('/items/:id/delete', itemsController.doDelete);
-router.get('/items/:id/edit', itemsController.edit);
-router.post('/items/:id/edit', itemsController.doEdit);
+// router.get('/items/:id', itemsController.get);
+// router.post('/items/:id/delete', itemsController.doDelete);
+// router.get('/items/:id/edit', itemsController.edit);
+// router.post('/items/:id/edit', itemsController.doEdit);
 
 
-router.get('/messges/:to', itemsController.list);
-router.post('/messges/:to', itemsController.doSend);
+// router.get('/messges/:to', itemsController.list);
+// router.post('/messges/:to', itemsController.doSend);
 
 
 /*

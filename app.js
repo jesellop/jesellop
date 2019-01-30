@@ -13,6 +13,7 @@ const passport = require('passport');
 
 var sessionsRouter = require('./routes/sessions.routes');
 var usersRouter = require('./routes/users.routes');
+var itemsRouter = require('./routes/items.routes')
 
 require('./configs/passport.config').setup(passport);
 require('./configs/db.config');
@@ -51,7 +52,7 @@ app.use(passport.session());
 
 app.use('/auth', sessionsRouter);
 app.use('/user', usersRouter);
-
+app.use('/items', itemsRouter);
 
 
 // catch 404 and forward to error handler
