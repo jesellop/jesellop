@@ -1,11 +1,22 @@
+require('dotenv').config();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
+const MongoStore = require("connect-mongo")(session);
+const mongoose= require('mongoose');
+const passport = require('passport');
 
-var indexRouter = require('./routes/clients.routes');
+
+var sessionsRouter = require('./routes/sessions.routes');
 var usersRouter = require('./routes/users.routes');
+
+require('./configs/passport.config').setup(passport);
+require('./configs/db.config');
+require('./configs/hbs.config');
 
 var app = express();
 
@@ -19,8 +30,29 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(session({
+  secret: 'SuperSecret - (Change it)',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    httpOnly: true,
+    maxAge: 60 * 60 * 24 * 1000
+  },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60
+  })
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+//app.use('/', indexRouter);
+
+app.use('/auth', sessionsRouter);
+app.use('/user', usersRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
