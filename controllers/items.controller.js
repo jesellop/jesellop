@@ -9,7 +9,13 @@ module.exports.doCreate =(req, res, next) => {
    item = new Item(req.body);
 
    item.save()
+   .then(res.redirect('/items'))
   
+}
+
+module.exports.list = (req, res, next) => {
+  Item.find()
+  .then((items) => res.render('auth/index', { items }));
 }
 
   // module.exports.doCreate = (req, res, next) => {

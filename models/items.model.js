@@ -12,8 +12,8 @@ const itemSchema = new mongoose.Schema({
     required: 'true'
   },
   category: {
-    type: mongoose.Schema.Types.ObjectId, //esto tenemos que ver como funciona el desplegable
-    ref: 'true'
+    type: String//mongoose.Schema.Types.ObjectId, //esto tenemos que ver como funciona el desplegable
+    //ref: 'true'
   },
   description: {
     type: String

@@ -4,7 +4,7 @@ const itemsController = require('../controllers/items.controller');
 //const authMiddleware = require('../middlewares/auth.middleware');
 
 
-//router.get('/items', itemsController.list);
+router.get('/', itemsController.list);
 
 router.get('/create', itemsController.create);
 router.post('/create', itemsController.doCreate);
