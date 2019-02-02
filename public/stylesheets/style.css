@@ -1,8 +1,58 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+
+.menu {
+  font-family: 'Abel', sans-serif;
+}
+
+.card-img {
+  width: 100%; 
+  height: 250px; 
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+#card:hover {
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,.2);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item-img {
+  border-radius: 6px;
+}
+
+#img-user-sm {
+  width: 75px; 
+  height: 75px; 
+  object-fit: cover;
+  border-radius: 40px;
+}
+
+#map-item {
+  width: 100%;
+  height: 200px;
+  border-radius: 6px;
+  border: 1px solid;
+}
+
+.img-list {
+  border-radius: 6px;
+  width: 100px; 
+  height: 100px;
+  object-fit: cover;
+}
+
+.logo-footer{
+  width: 100px;
+  height: 36px;
+}
+
+.footer{
+  vertical-align: baseline;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
 }

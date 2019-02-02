@@ -10,14 +10,13 @@ const MongoStore = require("connect-mongo")(session);
 const mongoose= require('mongoose');
 const passport = require('passport');
 
+require('./configs/passport.config').setup(passport);
+require('./configs/db.config');
+require('./configs/hbs.config');
 
 var sessionsRouter = require('./routes/sessions.routes');
 var usersRouter = require('./routes/users.routes');
 var itemsRouter = require('./routes/items.routes')
-
-require('./configs/passport.config').setup(passport);
-require('./configs/db.config');
-require('./configs/hbs.config');
 
 var app = express();
 
@@ -48,7 +47,11 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//app.use('/', indexRouter);
+app.use((req, res, next) => {
+  res.locals.session = req.user;
+  next();
+})
+
 
 app.use('/auth', sessionsRouter);
 app.use('/user', usersRouter);

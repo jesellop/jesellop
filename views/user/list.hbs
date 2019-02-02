@@ -1,1 +1,36 @@
-<h1>Hola</h1>
+
+<section>
+    
+    <div class="container mt-5">
+        <div class="row justify-content-md-center">
+            <div class="col-12 mb-3">
+                <h2>Tus productos</h2>
+                <a href="/user/list-sold" class="text-info">Productos Vendidos</a>
+            </div>
+            {{#each items as |item| }}
+            <div class="card col-12 mb-3">
+                <div class="row align-items-center">
+                    <img class="img-list m-1" src="{{ item.images }}" alt="">
+                    <div class="ml-4 mt-1">
+                        <h3>{{ item.price }}</h3>
+                        <p>{{ item.name }}</p>
+                    </div>
+                    <div class="row ml-auto mr-2">
+                        <form  action="/items/{{item._id}}/sold" method="post">
+                            <button class="btn btn-outline-success mr-2"><i class="fas fa-check"></i></button>
+                        </form>
+                        <form  action="/items/{{item._id}}/edit" method="get">
+                            <button class="btn btn-outline-secondary mr-2"><i class="fas fa-pencil-alt"></i></button>
+                        </form>
+                        <form  action="/items/{{item._id}}/delete" method="post">
+                            <button class="btn btn-outline-danger mr-2"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </div>
+                </div>  
+            </div>
+            {{/each}}
+        </div>   
+    </div>
+    
+</section>
+

@@ -12,11 +12,16 @@ const itemSchema = new mongoose.Schema({
     required: 'true'
   },
   category: {
-    type: String//mongoose.Schema.Types.ObjectId, //esto tenemos que ver como funciona el desplegable
-    //ref: 'true'
+    type: String, //esto tenemos que ver como funciona el desplegable
+    required: 'true'
+  },
+  images: {
+    type: [String],
+    required: true
   },
   description: {
-    type: String
+    type: String,
+    required: 'true'
   },
   picture: {
     type: String
@@ -26,9 +31,10 @@ const itemSchema = new mongoose.Schema({
       // type: {type: String },
       // coordinates: [Number]
   }, 
-  // owner: {
-  //   type: ObjectId //revisar esta linea
-  // }
+  owner: {
+    type: String,
+     //revisar esta linea
+  }
 }, { timestamps: true });
 
 // itemSchema.pre('save', function(next) {        esto sobra

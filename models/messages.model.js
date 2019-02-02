@@ -3,13 +3,15 @@ const mongoose = require('mongoose');
 const messageSchema = new mongoose.Schema({
   content: {
     type: String,
-    required: 'Write something'
+    required: true
   },
   sender: {
-    type: ObjectId
+    type: String,
+    required: true
   },
   recipient: {
-    type: ObjectId
+    type: String,
+    required: true
   }
 }, { timestamps: true });
 

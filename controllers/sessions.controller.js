@@ -1,4 +1,5 @@
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 module.exports.index = (req, res, next) => {
   res.render('auth/index');
@@ -19,4 +20,3 @@ module.exports.createWithIDPCallback = (req, res, next) => {
     }
   })(req, res, next);
 }
-
