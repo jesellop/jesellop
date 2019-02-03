@@ -15,6 +15,14 @@ const userSchema = new mongoose.Schema({
     googleId: String,
     facebookId: String
   },
+  alias: {
+    type: String,
+    default: 'User'
+  },
+  image: {
+    type: String,
+    default: '/images/default-user.jpg'
+  },
   location: {
     type: {
       type: String,

@@ -10,4 +10,7 @@ router.get('/messages', usersController.messages);
 
 router.get('/send-messages', usersController.sendMessages);
 
+router.get('/profile', usersController.profiles);
+//router.post('/:id/doProfile', itemsController.doProfile);
+
 module.exports = router;

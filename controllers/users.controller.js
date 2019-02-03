@@ -31,3 +31,7 @@ module.exports.messages = (req, res, next) => {
 module.exports.sendMessages = (req, res, next) => {
   res.render('user/form-messages');
 }
+
+module.exports.profiles =(req, res, next) => {
+  res.render('user/profile');
+}
