@@ -7,10 +7,7 @@
                         <img id="img-user-sm" src="{{ session.image }}" alt="foto-perfil">
                         <h5 class="ml-3 text-info">Este es tu perfil de usuario "{{session.alias}}"</h5>
                     </div>
-                    <div class="d-flex align-items-center">
-                        <input name="price" type="number" class="form-control w-25" id="price" placeholder="Pecio en €" value="{{item.price}}">
-                        <label class="mb-0 ml-2 font-weight-bold text-info">€</label>
-                    </div>
+                   
                     <div class="form-group">
                         <label for="alias">Cambia aquí tu nombre de usuario que es el que verán los compradores y vendedores de Jesellop:</label>
                         <label for="alias" class="text-black-50">Te aconsejamos que uses un mote o nombre ficticio</label>
@@ -18,7 +15,7 @@
                     </div>
                      <div class="form-group">
                         <label for="item-img">Cambia de foto de perfil</label>
-                        <input name="image" type="file" class="form-control-file mb-2" id="user-image" accept="image/jpeg">
+                        <input name="image" type="file" class="form-control-file mb-2" id="user-image" accept="image/jpeg" >
                     </div>
                     <div class="form-group mt-3 card p-4 bg-light">
                       <label for="">Estos son tu datos personales y no editables que nadie puede ver:</label>
