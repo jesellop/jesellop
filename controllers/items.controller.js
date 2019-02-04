@@ -52,6 +52,7 @@ module.exports.edit = (req, res, next) => {
 }
 
 module.exports.doEdit = (req, res, next) => {
+  console.info('DATA => ', req.body)
   Item.findById(req.params.id)
     .then((item) => {
       item.set(req.body);

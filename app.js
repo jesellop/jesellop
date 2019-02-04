@@ -1,10 +1,11 @@
 require('dotenv').config();
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const bodyParser = require('body-parser')
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 const session = require('express-session');
 const MongoStore = require("connect-mongo")(session);
 const mongoose= require('mongoose');
@@ -14,21 +15,21 @@ require('./configs/passport.config').setup(passport);
 require('./configs/db.config');
 require('./configs/hbs.config');
 
-var sessionsRouter = require('./routes/sessions.routes');
-var usersRouter = require('./routes/users.routes');
-var itemsRouter = require('./routes/items.routes')
+const sessionsRouter = require('./routes/sessions.routes');
+const usersRouter = require('./routes/users.routes');
+const itemsRouter = require('./routes/items.routes')
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(logger('dev'));
 
 app.use(session({
   secret: 'SuperSecret - (Change it)',

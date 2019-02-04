@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   alias: {
     type: String,
-    default: 'User'
+    // default: 'User'
   },
   image: {
     type: String,

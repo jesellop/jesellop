@@ -35,3 +35,20 @@ module.exports.sendMessages = (req, res, next) => {
 module.exports.profiles =(req, res, next) => {
   res.render('user/profile');
 }
+
+module.exports.editProfile = (req, res, next) => {
+  console.info('DATA => ', req.body)
+  res.redirect('/items')
+  // User.findByIdAndUpdate({ _id: req.params.id }, { alias:  })
+  // User.findById(req.params.id)
+  //   .then((user) => {
+  //     // findByIdAndUpdate
+  //     user.set(req.body);
+  //     user.save()
+  //       .then(user => {
+  //         console.log("profiled edited") 
+  //         res.redirect('/items' )
+  //       });
+  //   })
+  //   .catch(error => res.redirect('/items'))
+}
