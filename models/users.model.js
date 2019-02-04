@@ -17,20 +17,13 @@ const userSchema = new mongoose.Schema({
   },
   alias: {
     type: String,
-    // default: 'User'
+     default: 'User'
   },
   image: {
-    type: String,
+    type: [String],
     default: '/images/default-user.jpg'
-  },
-  location: {
-    type: {
-      type: String,
-      enum: ['Point'],
-      default: 'Point'
-    },
-    coordinates: [ Number ]
   }
+  
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
