@@ -56,7 +56,7 @@ module.exports.doEdit = (req, res, next) => {
   Item.findById(req.params.id)
     .then((item) => {
       item.set(req.body);
-console.log("pre guardado")
+
       item.save()
         .then((item) => { res.redirect('/user/list' )});
         console.log("Funciona el doEdit")
