@@ -22,7 +22,11 @@ module.exports.doCreate = (req, res, next) => {
     category: req.body.category,
     description: req.body.description,
     owner: req.body.owner,
-    images: req.files.map(f => f.path.replace('public', ''))
+    images: req.files.map(f => f.path.replace('public', '')),
+    location: {
+      type: 'Point',
+      coordinates: [req.body.longitude, req.body.latitude]
+    }
   });
 
   item.save()
