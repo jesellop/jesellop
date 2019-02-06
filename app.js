@@ -51,6 +51,9 @@ app.use(passport.session());
 
 app.use((req, res, next) => {
   res.locals.session = req.user;
+  res.locals.search = {
+    name: req.query.name
+  }
   next();
 })
 
