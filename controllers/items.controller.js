@@ -57,14 +57,12 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
   console.info('DATA => ', req.body)
-  Item.findById(req.params.id)
-    .then((item) => {
-      item.set(req.body);
-console.log("pre guardado")
-      item.save()
-        .then((item) => { res.redirect('/user/list' )});
-        console.log("Funciona el doEdit")
-    })
+  Item.findByIdAndUpdate( req.params.id, {$set: req.body, location: {
+    type: 'Point',
+    coordinates: [req.body.longitude, req.body.latitude]
+  }
+})
+.then(() => res.redirect('/user/list' ))
 }
 
 module.exports.details = (req, res, next) => {
