@@ -3,9 +3,7 @@ const User = require('../models/users.model');
 const Sold = require('../models/sold.model');
 
 module.exports.list =(req, res, next) => {
-  const { email } = res.locals.session
-  //console.info('session => ', email)
-  Item.find({ "owner" : email })
+  Item.find({ "owner" : req.user.id })
   .then((items) => {
     console.log("Funciona el listado de Items el usuario logueado")
     res.render('user/list', { items })
@@ -14,9 +12,7 @@ module.exports.list =(req, res, next) => {
 }
 
 module.exports.listSold =(req, res, next) => {
-  const { email } = res.locals.session
-  //console.info('session => ', email)
-  Sold.find({ "owner" : email })
+  Sold.find({ "owner" : req.user.id })
   .then((sold) => {
     console.log("Funciona el listado de Items vendidos del usuario logueado")
     res.render('user/list-sold', { sold })
