@@ -5,7 +5,13 @@ const mongoose = require('mongoose');
 
 
 module.exports.list = (req, res, next) => {
-  Item.find()
+  const { name } = req.query
+  const criterial = {}
+  if (name) {
+    criterial.name = new RegExp(name, "i"); /.*${req.query.name}.*/
+  }
+
+  Item.find(criterial)
     .then((items) => res.render('auth/index', { items }))
     .catch(err => next(err))
     console.log("Funciona el listado de Items")
@@ -21,12 +27,13 @@ module.exports.doCreate = (req, res, next) => {
     price: req.body.price,
     category: req.body.category,
     description: req.body.description,
-    owner: req.body.owner,
     images: req.files.map(f => f.path.replace('public', '')),
     location: {
       type: 'Point',
       coordinates: [req.body.longitude, req.body.latitude]
     }
+    owner: req.user.id,
+    
   });
 
   item.save()
@@ -57,20 +64,24 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
   console.info('DATA => ', req.body)
+
   Item.findByIdAndUpdate( req.params.id, {$set: req.body, location: {
     type: 'Point',
     coordinates: [req.body.longitude, req.body.latitude]
   }
 })
 .then(() => res.redirect('/user/list' ))
+
+
 }
 
 module.exports.details = (req, res, next) => {
   Item.findById(req.params.id)
-    .then((item) => res.render('auth/item', { item }))
-    .catch(err => next(err))
-    console.log("Funciona la vista de un item en grande")
-}
+    .then(item => {
+    User.findById(item.owner)
+     .then((user) => res.render('auth/item', { item, user }))
+      .catch(err => next(err))
+}) }
 
 module.exports.sold = (req, res, next) => {
   Item.findById(req.params.id)

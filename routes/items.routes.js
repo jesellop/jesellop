@@ -19,6 +19,7 @@ router.get('/:id/edit', itemsController.edit);
 router.post('/:id/doEdit', itemsController.doEdit);
 
 router.post('/:id/sold', itemsController.sold);
+
 // router.get('/messges/:to', itemsController.list);
 // router.post('/messges/:to', itemsController.doSend);
 
