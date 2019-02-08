@@ -56,3 +56,12 @@ body {
 a {
   text-decoration: none;
 }
+
+#map {
+  width:  500px;
+  height: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  
+}

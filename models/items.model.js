@@ -25,9 +25,12 @@ const itemSchema = new mongoose.Schema({
   },
   
   location: {
-    type: String  // hasta tengamos gmaps
-      // type: {type: String },
-      // coordinates: [Number]
+    
+      type: {
+        type: String,
+        default : "Point"
+      },
+      coordinates: [Number]
   }, 
   owner: {
     type: mongoose.Schema.Types.ObjectId,

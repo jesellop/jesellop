@@ -1,5 +1,5 @@
 
-<section>
+<section id="form-item">
     <div class="container mt-5">
         <div class="row justify-content-md-center">
             <div class="card col-7">
@@ -54,6 +54,11 @@
                         <div id="map-item"></div>
                     </div> --}}
 
+
+                    <textarea hidden name="owner" id="owner" cols="10" rows="1" value="{{ item.owner }}">{{ session.email}}</textarea>
+                    <input  name="latitude" type="text" id="latitude">
+                    <input  name="longitude" type="text" id="longitude">
+
                     
                     <div class="my-3 mx-auto">
                         <button type="submit" class="btn btn-info">Subir producto</button>
@@ -63,5 +68,6 @@
             </div>
         </div>
     </div> 
+    <div id="map"></div>
 </section>
 

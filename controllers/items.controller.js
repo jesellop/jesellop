@@ -27,8 +27,13 @@ module.exports.doCreate = (req, res, next) => {
     price: req.body.price,
     category: req.body.category,
     description: req.body.description,
+    images: req.files.map(f => f.path.replace('public', '')),
+    location: {
+      type: 'Point',
+      coordinates: [req.body.longitude, req.body.latitude]
+    }
     owner: req.user.id,
-    images: req.files.map(f => f.path.replace('public', ''))
+    
   });
 
   item.save()
@@ -59,14 +64,15 @@ module.exports.edit = (req, res, next) => {
 
 module.exports.doEdit = (req, res, next) => {
   console.info('DATA => ', req.body)
-  Item.findById(req.params.id)
-    .then((item) => {
-      item.set(req.body);
 
-      item.save()
-        .then((item) => { res.redirect('/user/list' )});
-        console.log("Funciona el doEdit")
-    })
+  Item.findByIdAndUpdate( req.params.id, {$set: req.body, location: {
+    type: 'Point',
+    coordinates: [req.body.longitude, req.body.latitude]
+  }
+})
+.then(() => res.redirect('/user/list' ))
+
+
 }
 
 module.exports.details = (req, res, next) => {
