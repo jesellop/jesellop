@@ -5,7 +5,13 @@ const mongoose = require('mongoose');
 
 
 module.exports.list = (req, res, next) => {
-  Item.find()
+  const { name } = req.query
+  const criterial = {}
+  if (name) {
+    criterial.name = new RegExp(name, "i"); /.*${req.query.name}.*/
+  }
+
+  Item.find(criterial)
     .then((items) => res.render('auth/index', { items }))
     .catch(err => next(err))
     console.log("Funciona el listado de Items")
