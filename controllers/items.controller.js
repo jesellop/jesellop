@@ -27,7 +27,7 @@ module.exports.doCreate = (req, res, next) => {
     price: req.body.price,
     category: req.body.category,
     description: req.body.description,
-    owner: req.body.owner,
+    owner: req.user.id,
     images: req.files.map(f => f.path.replace('public', ''))
   });
 
@@ -62,7 +62,7 @@ module.exports.doEdit = (req, res, next) => {
   Item.findById(req.params.id)
     .then((item) => {
       item.set(req.body);
-console.log("pre guardado")
+
       item.save()
         .then((item) => { res.redirect('/user/list' )});
         console.log("Funciona el doEdit")
@@ -71,10 +71,11 @@ console.log("pre guardado")
 
 module.exports.details = (req, res, next) => {
   Item.findById(req.params.id)
-    .then((item) => res.render('auth/item', { item }))
-    .catch(err => next(err))
-    console.log("Funciona la vista de un item en grande")
-}
+    .then(item => {
+    User.findById(item.owner)
+     .then((user) => res.render('auth/item', { item, user }))
+      .catch(err => next(err))
+}) }
 
 module.exports.sold = (req, res, next) => {
   Item.findById(req.params.id)

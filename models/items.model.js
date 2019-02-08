@@ -30,8 +30,9 @@ const itemSchema = new mongoose.Schema({
       // coordinates: [Number]
   }, 
   owner: {
-    type: String,
-     //revisar esta linea
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, { timestamps: true });
 
