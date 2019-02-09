@@ -10,9 +10,11 @@ router.get('/list', usersController.list);
 router.get('/list-sold', usersController.listSold);
 
 router.get('/messages', usersController.messages);
+
+
 router.get('/:id/messages', usersController.createMessages);
 router.post('/send', usersController.send);
-router.get('/:id/respond', usersController.respondMessages);
+// router.get('/:id/respond', usersController.respondMessages);
 
 router.get('/:id/profile', usersController.profiles);
 router.post('/:id/profile', upload.single('image'), usersController.editProfile);

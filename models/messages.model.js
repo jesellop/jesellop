@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const messageSchema = new mongoose.Schema({
-  // content: {
-  //   type: [String],
-  //   required: true
-  // },
   content: {
     type: String,
     required: true
@@ -26,8 +22,8 @@ const messageSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-const Msn = mongoose.model('Messages', messageSchema);
-module.exports = Msn;
+const Message = mongoose.model('Message', messageSchema);
+module.exports = Message;
 
 /**
  * Listar todos los mensajes de un item

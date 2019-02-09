@@ -6,7 +6,7 @@
                 <h5 class="text-info">Tus mensajes {{ session.alias }}</h5>
             </div>
 
-            {{#each message as |message| }}
+            {{#each messages as |message| }}
             <div class="card col-12 mb-3">
                 <div class="row align-items-center">
                     <img class="img-list m-1" src="{{ item.images.[0]}}" alt="item-image">

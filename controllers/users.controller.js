@@ -53,35 +53,47 @@ module.exports.createMessages = (req, res, next) => {
   });
 }
 
+// POST /messages/:itemId
 module.exports.send = (req, res, next) => {
-  const msg = new Message(req.body);
-
-  msg.save()
-    .then((message) => { res.redirect('/user/messages')
-    console.log("Funciona el salvado de Mensajes")
+  const message = new Message({
+    sender: req.user.id,
+    recipient: req.body.recipientId,
+    content: req.body.content,
+    item: req.params.itemId
   })
-  .catch(error => res.redirect('/user/list'))
-    
+
+  message.save()
+    .then((message) => res.redirect('/user/messages'))
+    .catch(error => res.redirect('/user/list'))
 }
 
 module.exports.messages =(req, res, next) => {
-  Message.find().distinct('item')
+  Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
+    .populate('item')
+    .populate('sender')
+    .populate('recipient')
+    .distinct('item')
     .then(messages => {
-      Item.populate({item: messages}, {path: "item"}) 
-        .then(item => console.info('ITEM => ', item) || res.render('user/messages', { messages, item: item.item }))
-        .catch(err => next(err))
-  });
+      console.info(messages)
+      res.render('user/messages', { messages })
+    })
+    .catch(error => next(error));
 }
 
-module.exports.respondMessages = (req, res, next) => {
-Message.findById(req.params.id)
-.then(message => {
-  Item.findById(message, {path: "item"})
-        .then(item => {
-          User.findById(message, {path: "receiver"})
-          .then((user) => res.render('user/form-messages', { message, item, user }))
-          .catch(error => res.redirect('/user/list'))
-  });
-});
-    
+// POST /messages/:itemId/users/:userId
+module.exports.chat =(req, res, next) => {
+  Message.find({
+    item: req.params.itemId,
+    $or: [
+      {recipient: req.user.id, sender: req.params.userId}, 
+      {sender: req.user.id, recipient: req.params.userId}
+    ]})
+    .populate('item')
+    .populate('sender')
+    .populate('recipient')
+    .then(messages => {
+      console.info(messages)
+      res.render('user/chat', { messages })
+    })
+    .catch(error => next(error));
 }
