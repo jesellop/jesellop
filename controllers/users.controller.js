@@ -1,6 +1,8 @@
 const Item = require('../models/items.model');
 const User = require('../models/users.model');
 const Sold = require('../models/sold.model');
+const Message = require('../models/messages.model');
+const PATH_PIC = '/uploads/'
 
 module.exports.list =(req, res, next) => {
   Item.find({ "owner" : req.user.id })
@@ -20,44 +22,66 @@ module.exports.listSold =(req, res, next) => {
   .catch(err => next(err))
 }
 
-module.exports.messages = (req, res, next) => {
-  res.render('user/messages');
-}
-
-module.exports.sendMessages = (req, res, next) => {
-  res.render('user/form-messages');
-}
 
 module.exports.profiles =(req, res, next) => {
   res.render('user/profile');
 }
 
-// const fileExists = file => file ? file.path : ''
+const hasFile = (file, body) => file && (body['image'] = `${PATH_PIC}${file.filename}`)
 
 module.exports.editProfile = (req, res, next) => {
-  const { alias } = req.body
-  console.info('DATA => ', req.file || 'default_pic')
-  console.info('COSAS => ', req.params.id)
-  
-
-User.findByIdAndUpdate({ _id: req.params.id }, { alias: req.body.alias, image: req.file.path.replace('public', '') })
-
-  // User.findById({ _id: req.params.id }, { alias: { "$exists" : false }})
-  // .then((user) => {
-  //   user.update({"$set": { alias: req.body.alias} })
-  // User.findById({ _id: req.params.id }, { image: { "$exists" : false }})
-  // .then((user) => {
- 
-  //   user.update({"$set": { image: req.file.path.replace('public', '')} })
-  // User.findById(req.params.id)
-  //   .then((user) => {
-  //     // findByIdAndUpdate
-  //     user.set(req.body);
-  //     user.save()
-        .then((user) => {
-          console.log("profiled edited") 
-          res.redirect('/items' )
-        })
-    // })
+  const { body, file } = req
+  hasFile(file, body)
+  User.findByIdAndUpdate({ _id: req.params.id }, body)
+    .then(user => {
+      console.log("profiled edited", user) 
+      res.redirect('/items' )
+    })
     .catch(error => res.redirect('/user/list'))
-  }
+}
+
+/**
+ * De aquí para abajo debería ir en un controller de messages
+ */
+
+module.exports.createMessages = (req, res, next) => {
+  Item.findById(req.params.id)
+      .then(item => {
+        User.findById(item.owner)
+        .then((user) => res.render('user/form-messages', { item, user }))
+        .catch(error => res.redirect('/user/list'))
+  });
+}
+
+module.exports.send = (req, res, next) => {
+  const msg = new Message(req.body);
+
+  msg.save()
+    .then((message) => { res.redirect('/user/messages')
+    console.log("Funciona el salvado de Mensajes")
+  })
+  .catch(error => res.redirect('/user/list'))
+    
+}
+
+module.exports.messages =(req, res, next) => {
+  Message.find().distinct('item')
+    .then(messages => {
+      Item.populate({item: messages}, {path: "item"}) 
+        .then(item => console.info('ITEM => ', item) || res.render('user/messages', { messages, item: item.item }))
+        .catch(err => next(err))
+  });
+}
+
+module.exports.respondMessages = (req, res, next) => {
+Message.findById(req.params.id)
+.then(message => {
+  Item.findById(message, {path: "item"})
+        .then(item => {
+          User.findById(message, {path: "receiver"})
+          .then((user) => res.render('user/form-messages', { message, item, user }))
+          .catch(error => res.redirect('/user/list'))
+  });
+});
+    
+}
