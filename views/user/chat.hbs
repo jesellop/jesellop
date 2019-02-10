@@ -1,0 +1,31 @@
+ <div class="container mt-4">
+    <div class="card col-12 mb-3">
+        <div class="row align-items-center">
+            <img class="img-list m-1" src="{{ item.images.[0]}}" alt="item-image">
+            <div class="ml-4 mt-1">
+                <h3> {{ item.name }}</h3>
+                <h5>{{ item.price }} €</h5>
+                <a href="">Ver</a>
+            </div>
+            <div class="row ml-auto  align-items-center mr-3">
+                <h3 class="card-title pr-3 text-info">{{ user.alias }}</h3>
+                <img id="img-user-sm" src="{{ user.image }}" alt="foto-perfil">
+            </div>
+        </div>  
+    </div>
+    <div class="card p-2">
+        {{#each messages as |message|}}
+        <p class="chat-sender{{#if session }} chat-recipient{{/if}}">{{message.content}}</p>
+        {{/each}}
+    </div>
+ </div>
+
+<div class="container mt-3">
+    <form class="card p-2" action="/user/{{item._id}}" method="post">
+        <div class="form-group">
+            <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escriba aqui su mensaje"></textarea>
+        <input name="recipientId" type="text" value="{{ user._id }}" hidden>
+        </div>
+        <button type="submit" class="btn btn-info mx-auto">Enviar</button>
+    </form>
+</div>

@@ -65,3 +65,21 @@ a {
   margin-top: 50px;
   
 }
+
+.chat-sender{
+  font-size: 1.1em;
+  margin-left: auto;
+  margin-right: 1.3em;
+  background-color: aliceblue;
+  padding: 0.3em 1.3em;
+  border-radius: 30px;
+}
+
+.chat-recipient {
+  font-size: 1.1em;
+  margin-right: auto;
+  margin-left: 1.3em;
+  background-color: lightblue;
+  padding: 0.3em 1.3em;
+  border-radius: 30px;
+}

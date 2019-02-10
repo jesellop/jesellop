@@ -1,6 +1,6 @@
  <div class="container mt-4">
      <h5 class="text-info">Mensajes a {{ user.alias }} por: {{ item.name }}</h5>
-     
+
      <p> De parte de {{ session.alias }}</p>
      <div class="card p-2">
          <p> Aqui va el mensaje </p>
@@ -8,12 +8,12 @@
  </div>
 
 <div class="container mt-3">
-    <form class="card p-2" action="/user/send" method="post">
+    <form class="card p-2" action="/user/{{item._id}}" method="post">
         <div class="form-group">
             <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escriba aqui su mensaje"></textarea>
-            <input name="sender" type="text" value="{{ session._id }}" hidden>
-            <input name="recipient" type="text" value="{{ user._id }}" hidden>
-            <input name="item" type="text" value="{{ item._id }}" hidden>
+            
+            <input name="recipientId" type="text" value="{{ user._id }}" hidden>
+           
             
         </div>
         <button type="submit" class="btn btn-info mx-auto">Enviar</button>

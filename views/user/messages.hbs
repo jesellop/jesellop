@@ -1,26 +1,26 @@
 <section>
     
-    <div class="container mt-5">
+    <div class="container my-5">
         <div class="row justify-content-md-center">
             <div class="col-12">
                 <h5 class="text-info">Tus mensajes {{ session.alias }}</h5>
             </div>
-
+            
             {{#each messages as |message| }}
             <div class="card col-12 mb-3">
                 <div class="row align-items-center">
                     <img class="img-list m-1" src="{{ item.images.[0]}}" alt="item-image">
                     <div class="ml-4 mt-1">
-                        <h3>Nombre del item: {{ item.name }}</h3>
+                        <h3> {{ item.name }}</h3>
+                        <h5>Vendedor: {{ recipient.alias }}</h5>
                         <p>Contenido: {{ message.content }}</p>
                     </div>
-                    <form class="row ml-auto mr-3" action="/user/{{ message._id }}/respond" method="get">
+                    <form class="row ml-auto mr-3" action="/user/{{item._id}}/users/{{recipient._id}}/{{sender._id}}" method="post">
                         <button type="submit" class="btn btn-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</button>
                     </form>
                 </div>  
             </div>
             {{/each}}
-            
             {{!-- {{#each message as |message| }}
             <div class="card col-12 mb-3">
                 <div class="row align-items-center">

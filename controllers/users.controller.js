@@ -64,7 +64,7 @@ module.exports.send = (req, res, next) => {
 
   message.save()
     .then((message) => res.redirect('/user/messages'))
-    .catch(error => res.redirect('/user/list'))
+    .catch(error => next(error))
 }
 
 module.exports.messages =(req, res, next) => {
@@ -72,7 +72,7 @@ module.exports.messages =(req, res, next) => {
     .populate('item')
     .populate('sender')
     .populate('recipient')
-    .distinct('item')
+    //.distinct('item')
     .then(messages => {
       console.info(messages)
       res.render('user/messages', { messages })
@@ -85,15 +85,24 @@ module.exports.chat =(req, res, next) => {
   Message.find({
     item: req.params.itemId,
     $or: [
-      {recipient: req.user.id, sender: req.params.userId}, 
+      {recipient: req.user.id, sender: req.params.senderId}, 
       {sender: req.user.id, recipient: req.params.userId}
     ]})
     .populate('item')
     .populate('sender')
     .populate('recipient')
     .then(messages => {
-      console.info(messages)
-      res.render('user/chat', { messages })
+      console.log('CHAT=>', req.params.id)
+      console.log('CHAT=>', req.user.id)
+      Item.findById(req.params.itemId)
+      .then(item => {
+        User.findById(req.params.userId)
+        .then(user => {
+        res.render('user/chat', { messages, item, user })
+        })
+      })
     })
     .catch(error => next(error));
 }
+
+

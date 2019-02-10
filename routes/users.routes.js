@@ -13,8 +13,8 @@ router.get('/messages', usersController.messages);
 
 
 router.get('/:id/messages', usersController.createMessages);
-router.post('/send', usersController.send);
-// router.get('/:id/respond', usersController.respondMessages);
+router.post('/:itemId', usersController.send);
+router.post('/:itemId/users/:userId/:senderId', usersController.chat);
 
 router.get('/:id/profile', usersController.profiles);
 router.post('/:id/profile', upload.single('image'), usersController.editProfile);
