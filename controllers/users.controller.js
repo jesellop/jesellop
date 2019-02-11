@@ -68,13 +68,34 @@ module.exports.send = (req, res, next) => {
 }
 
 module.exports.messages =(req, res, next) => {
+
+  /**
+   * Primer Paso => Buscar todos los items sobre los que hay algún mensaje (No deben repetirse)
+   */
+
+  /**
+   * Segundo Paso => Buscar todos los usuarios con los que se ha mantenido una conversación en 
+   * relación a ese item
+   */
+
+  /**
+   * Tercer Paso => Obtener todos los mensajes mandados y recibidos con ese usuario
+   */
+
   Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
     .populate('item')
     .populate('sender')
     .populate('recipient')
-    //.distinct('item')
     .then(messages => {
-      console.info(messages)
+      messages = messages.reduce((data, message) => {
+          const itemId = message.item.id;
+          if (!data.ids[itemId]) {
+            data.messages.push(message)
+            data.ids[itemId] = true;
+          }
+          return data;
+        }, { messages: [], ids: {}})
+        .messages;
       res.render('user/messages', { messages })
     })
     .catch(error => next(error));
