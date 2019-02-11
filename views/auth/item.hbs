@@ -47,12 +47,10 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text font-weight-light"><i class="fas fa-map-marker-alt"> Dirección del Vendedor</i></p>
+                    <input class="mb-2" name="latitude" type="text" id="latitude" value="{{ item.location.coordinates.[1] }}">
+                    <input class="mb-2" name="longitude" type="text" id="longitude" value="{{ item.location.coordinates.[0] }}">   
                     <div id="map"></div>
                 </div>
-                 <input  name="latitude" type="text" id="latitude" value="{{ item.location.coordinates.[1] }}">
-                 <input  name="longitude" type="text" id="longitude" value="{{ item.location.coordinates.[0] }}">
-                <div id="map"></div>
-                
             </div>
         </div>
     </div> 
