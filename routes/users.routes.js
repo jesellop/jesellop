@@ -16,4 +16,7 @@ router.get('/send-messages', usersController.sendMessages);
 router.get('/:id/profile', usersController.profiles);
 router.post('/:id/profile', upload.single('image'), usersController.editProfile);
 
+router.post('/:id/favourite', usersController.favourite)
+router.get('/favourite', usersController.listFavourite)
+
 module.exports = router;
