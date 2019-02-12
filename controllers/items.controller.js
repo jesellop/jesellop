@@ -32,6 +32,7 @@ module.exports.doCreate = (req, res, next) => {
       type: 'Point',
       coordinates: [req.body.longitude, req.body.latitude]
     },
+    address: req.body.address,
     owner: req.user.id
     
   });

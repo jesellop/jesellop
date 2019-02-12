@@ -6,12 +6,12 @@
                     <h5 class="mt-3 text-info">Edita tu producto</h5>
                     <div class="form-group mt-3">
                       <label for="name-item">¿Que estás vendiendo?</label>
-                      <input name="name" type="text" class="form-control" id="name" placeholder="Breve descripción del artículo" value="{{item.name}}">
+                      <input name="name" type="text" class="form-control" id="name" placeholder="Breve descripción del artículo" value="{{item.name}}" required>
                     </div>
                     <div class="form-group">
                         <label for="price">Precio</label>
                         <div class="d-flex align-items-center">
-                            <input name="price" type="number" class="form-control w-25" id="price" placeholder="Pecio en €" value="{{item.price}}">
+                            <input name="price" type="number" class="form-control w-25" id="price" placeholder="Pecio en €" value="{{item.price}}" required>
                             <label class="mb-0 ml-2 font-weight-bold text-info">€</label>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="form-group">
                         <label name="description" for="exampleFormControlTextarea1">Descripción del artículo</label>
-                        <textarea name="description" class="form-control" id="description" rows="4" value="{{item.description}}">{{item.description}} </textarea>
+                        <textarea name="description" class="form-control" id="description" rows="4" value="{{item.description}}" required>{{item.description}} </textarea>
                     </div>
                     {{!-- <form>
                         <div class="form-group">
@@ -59,11 +59,25 @@
 
 
                     <textarea hidden name="owner" id="owner" cols="10" rows="1" value="{{ item.owner }}">{{item.owner}}</textarea>
-                    <input class="mb-2" name="latitude" type="text" id="latitude">
+                    {{!-- <input class="mb-2" name="latitude" type="text" id="latitude">
                     <input class="mb-2" name="longitude" type="text" id="longitude">
 
-                    <div id="map"></div>
+                    <div id="map"></div> --}}
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt text-info"></i> Escribe el nombre de tu población</label>
+                        <div class="d-flex ">
+                            <input id="address" type="textbox" name="address" class="form-control " placeholder="España" required value="{{item.address}}">
+                            <button type="button" value="Update Item Location" onclick="codeAddress()" class="btn btn-outline-info "><i class="fas fa-search"></i></button>
+                        </div>
+                        
+                    </div>
 
+                    
+                    <input hidden type="text" id="latitude" class="form-control" name="latitude" value="{{ item.location.coordinates.[1] }}" placeholder="Latitude" />
+                    <input hidden type="text" id="longitude" class="form-control" name="longitude" value="{{ item.location.coordinates.[0] }}" placeholder="Longitude" />
+                        
+                    
+                    <div id="map"></div>
                     <div class="my-3 mx-auto">
                         <button type="submit" class="btn btn-info">Subir producto</button>
                     </div>

@@ -31,7 +31,11 @@ const itemSchema = new mongoose.Schema({
         default : "Point"
       },
       coordinates: [Number]
-  }, 
+  },
+  address: {
+    type: String,
+    required: 'true'
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
