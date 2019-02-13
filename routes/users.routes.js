@@ -14,9 +14,12 @@ router.get('/messages', usersController.messages);
 
 router.get('/:id/messages', usersController.createMessages);
 router.post('/:itemId', usersController.send);
-router.post('/:itemId/users/:userId/:senderId', usersController.chat);
+router.get('/:itemId/messages_with/:other_id', usersController.chat);
 
 router.get('/:id/profile', usersController.profiles);
 router.post('/:id/profile', upload.single('image'), usersController.editProfile);
+
+router.post('/:id/itemMsgs', usersController.itemMsgs);
+
 
 module.exports = router;

@@ -57,7 +57,7 @@ module.exports.createMessages = (req, res, next) => {
 module.exports.send = (req, res, next) => {
   const message = new Message({
     sender: req.user.id,
-    recipient: req.body.recipientId,
+    recipient: req.body.recipient,
     content: req.body.content,
     item: req.params.itemId
   })
@@ -106,24 +106,54 @@ module.exports.chat =(req, res, next) => {
   Message.find({
     item: req.params.itemId,
     $or: [
-      {recipient: req.user.id, sender: req.params.senderId}, 
-      {sender: req.user.id, recipient: req.params.userId}
+      {recipient: req.user.id, sender: req.params.other_id}, 
+      {sender: req.user.id, recipient: req.params.other_id}
     ]})
     .populate('item')
     .populate('sender')
     .populate('recipient')
     .then(messages => {
-      console.log('CHAT=>', req.params.id)
-      console.log('CHAT=>', req.user.id)
-      Item.findById(req.params.itemId)
-      .then(item => {
-        User.findById(req.params.userId)
-        .then(user => {
-        res.render('user/chat', { messages, item, user })
-        })
-      })
+        const user = messages.find(m => m.sender._id.toString() === req.params.other_id).sender;
+
+        res.render('user/chat', { messages, item: messages[0].item, user })
     })
     .catch(error => next(error));
 }
 
 
+
+// module.exports.itemMsgs =(req, res, next) => {
+//   const itemMsgId = req.params.id;
+//   console.log("la id del item es " + itemMsgId)
+//   Message.find()
+//   Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
+//     .populate('item')
+//     .populate('sender')
+//     .populate('recipient')
+//     .then(messages => {
+//       res.render('user/messages', { messages })
+   
+//     })
+//     .catch(error => next(error));
+// }
+
+module.exports.itemMsgs =(req, res, next) => {
+const idItem = req.params.id;
+Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
+  .populate('item')
+  .populate('sender')
+  .populate('recipient')
+  .then(messages => {
+    messages = messages.reduce((data, message) => {
+        const userId = message.sender.id;
+        if (!data.ids[userId]) {
+          data.messages.push(message)
+          data.ids[userId] = true;
+        }
+        return data;
+      }, { messages: [], ids: {}})
+      .messages;
+    res.render('user/messages', { messages })
+  })
+  .catch(error => next(error));
+}
