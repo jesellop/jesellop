@@ -64,16 +64,12 @@ User.findByIdAndUpdate({ _id: req.params.id }, { alias: req.body.alias, image: r
   }
 
   module.exports.favourite = (req, res, next) => {
-    
     Item.findById(req.params.id)
       .then((item) => {
         const favItem = new Favourite ({
           item: item.id, client: req.user.id
-        } )
-        
-    
+        })
       favItem.save();
-      
     })
     .then(res.redirect('/user/favourite'))
     .catch(err => next(err))
@@ -81,15 +77,16 @@ User.findByIdAndUpdate({ _id: req.params.id }, { alias: req.body.alias, image: r
 
   module.exports.listFavourite =(req, res, next) => {
     Favourite.find({ "client" : req.user.id })
-    
-    .then((favs) => {
-      Item.findById(favs.item)
-      .then((favItem) => {
-
-      
-      console.log("Funciona el listado de favoritos")
-      res.render('user/favourites', { favs, favItem })
+    .populate('item')
+    .then((fav) => {
+      res.render('user/favourites', { fav })
     })
-  })
     .catch(err => next(err))
   }
+
+  module.exports.deleteFav = (req, res, next) => {
+    Favourite.findByIdAndDelete(req.params.id)
+      .then(() => res.redirect('/user/favourite'))
+      .catch(err => next(err))
+  }
+

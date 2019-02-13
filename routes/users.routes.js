@@ -18,5 +18,6 @@ router.post('/:id/profile', upload.single('image'), usersController.editProfile)
 
 router.post('/:id/favourite', usersController.favourite)
 router.get('/favourite', usersController.listFavourite)
+router.post('/:id/deleteFav', usersController.deleteFav);
 
 module.exports = router;

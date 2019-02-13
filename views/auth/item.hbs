@@ -6,12 +6,12 @@
                         <img id="img-user-sm" src="{{ user.image }}" alt="foto-perfil">
                         <h5 class="card-title pl-3">{{ user.alias }}</h5>  
                     </div>
-                    <div>
-                        <a href="#" class="btn btn-outline-danger badge-pill mr-2"><i class="fas fa-heart"></i></a>
-                        <button type="button" class="btn btn-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</button>
+                     <div class="row">
+                        <form  action="/user/{{ item.id }}/favourite" method="post">
+                            <button class="mr-3 btn btn-outline-danger badge-pill"><i class="fas fa-heart"></i></button>
+                        </form>
+                        <a href="/user/{{item._id}}/messages" class="btn btn-outline-info text-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</a>
                     </div>
-                    
-                </div>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
