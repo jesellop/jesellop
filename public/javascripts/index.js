@@ -6,6 +6,7 @@ function initMap() {
 
   window.map = new Map(domElement);
   window.map.init();
+  //window.map.addSearch("pac-input"); //added
 
   if (navigator.geolocation)  {
     centerMapOnBrowser();
@@ -61,3 +62,8 @@ function addMarkerAndUpateForm(lat, lng) {
   document.getElementById('latitude').value = lat;
   document.getElementById('longitude').value = lng;
 }
+
+
+//added down
+
+

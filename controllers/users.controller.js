@@ -1,6 +1,7 @@
 const Item = require('../models/items.model');
 const User = require('../models/users.model');
 const Sold = require('../models/sold.model');
+const Favourite = require('../models/favourite.model')
 
 module.exports.list =(req, res, next) => {
   Item.find({ "owner" : req.user.id })
@@ -61,3 +62,31 @@ User.findByIdAndUpdate({ _id: req.params.id }, { alias: req.body.alias, image: r
     // })
     .catch(error => res.redirect('/user/list'))
   }
+
+  module.exports.favourite = (req, res, next) => {
+    Item.findById(req.params.id)
+      .then((item) => {
+        const favItem = new Favourite ({
+          item: item.id, client: req.user.id
+        })
+      favItem.save();
+    })
+    .then(res.redirect('/user/favourite'))
+    .catch(err => next(err))
+  }
+
+  module.exports.listFavourite =(req, res, next) => {
+    Favourite.find({ "client" : req.user.id })
+    .populate('item')
+    .then((fav) => {
+      res.render('user/favourites', { fav })
+    })
+    .catch(err => next(err))
+  }
+
+  module.exports.deleteFav = (req, res, next) => {
+    Favourite.findByIdAndDelete(req.params.id)
+      .then(() => res.redirect('/user/favourite'))
+      .catch(err => next(err))
+  }
+

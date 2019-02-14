@@ -1,5 +1,6 @@
 <div id="auth-index" class="container my-5">
     <div class="d-flex flex-wrap justify-content-center">
+       
         {{#each items as |item|}}
         <a href="/items/{{item.id}}/details" id="{{item.id}}" class="view card mx-2 mb-3" style="width: 15rem">
             <form class="heart" action="/user/{{ item.id }}/favourite" method="post">

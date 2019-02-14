@@ -43,4 +43,37 @@ class Map {
   showAllMarkers() {
     this.markers.forEach(marker => marker.setMap(this.googleMap));
   }
+
+  //  addSearch(searchBoxId) {  //added
+  //   const input = document.getElementById(searchBoxId);
+  
+  //   const searchBox = new google.maps.places.SearchBox(input);
+  
+  //   this.googleMap.addListener("bounds_changed", () => {
+  //     searchBox.setBounds(this.googleMap.getBounds())
+  //   })
+  
+  //   searchBox.addListener("places_changed", () => {
+  //     this.clearMarkers();
+  
+  //     const places = searchBox.getPlaces();
+  
+  //     if (places.length === 0) return;
+  
+  //     places.forEach(place => {
+  //       this.addMarker(place.geometry.location.lat(), place.geometry.location.lng());
+  
+  //       this.googleMap.setCenter(place.geometry.location);
+  
+  //       //means we are on create users page!
+  //       if (document.getElementById("auth-index")) {
+  //         const lat = place.geometry.location.lat();
+  //         const lng = place.geometry.location.lng();
+  //         document.getElementById('latitude').value = lat.toFixed(3);
+  //         document.getElementById('longitude').value = lng.toFixed(3);
+  //       }
+  //     })
+  //   });
+  
+  // }
 }
