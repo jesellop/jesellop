@@ -40,24 +40,19 @@ module.exports.editProfile = (req, res, next) => {
     .catch(error => res.redirect('/user/list'))
 }
 
-/**
- * De aquí para abajo debería ir en un controller de messages
- */
-
 module.exports.createMessages = (req, res, next) => {
   Item.findById(req.params.id)
       .then(item => {
         User.findById(item.owner)
         .then((user) => res.render('user/form-messages', { item, user }))
-        .catch(error => res.redirect('/user/list'))
+        .catch(error => next(error))
   });
 }
 
-// POST /messages/:itemId
 module.exports.send = (req, res, next) => {
   const message = new Message({
     sender: req.user.id,
-    recipient: req.body.recipientId,
+    recipient: req.body.recipient,
     content: req.body.content,
     item: req.params.itemId
   })
@@ -68,20 +63,6 @@ module.exports.send = (req, res, next) => {
 }
 
 module.exports.messages =(req, res, next) => {
-
-  /**
-   * Primer Paso => Buscar todos los items sobre los que hay algún mensaje (No deben repetirse)
-   */
-
-  /**
-   * Segundo Paso => Buscar todos los usuarios con los que se ha mantenido una conversación en 
-   * relación a ese item
-   */
-
-  /**
-   * Tercer Paso => Obtener todos los mensajes mandados y recibidos con ese usuario
-   */
-
   Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
     .populate('item')
     .populate('sender')
@@ -101,29 +82,46 @@ module.exports.messages =(req, res, next) => {
     .catch(error => next(error));
 }
 
-// POST /messages/:itemId/users/:userId
+
 module.exports.chat =(req, res, next) => {
   Message.find({
     item: req.params.itemId,
     $or: [
-      {recipient: req.user.id, sender: req.params.senderId}, 
-      {sender: req.user.id, recipient: req.params.userId}
+      {recipient: req.user.id, sender: req.params.other_id}, 
+      {sender: req.user.id, recipient: req.params.other_id}
     ]})
     .populate('item')
     .populate('sender')
     .populate('recipient')
     .then(messages => {
-      console.log('CHAT=>', req.params.id)
-      console.log('CHAT=>', req.user.id)
-      Item.findById(req.params.itemId)
-      .then(item => {
-        User.findById(req.params.userId)
-        .then(user => {
-        res.render('user/chat', { messages, item, user })
-        })
-      })
+      
+        const user = messages.find(m => m.sender._id.toString() === req.params.other_id).sender;
+        
+        res.render('user/chat', { messages, item: messages[0].item, user })
     })
     .catch(error => next(error));
+}
+
+
+module.exports.itemMsgs =(req, res, next) => {
+const idItem = req.params.id;
+Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
+  .populate('item')
+  .populate('sender')
+  .populate('recipient')
+  .then(messages => {
+    messages = messages.reduce((data, message) => {
+        const userId = message.sender.id;
+        if (!data.ids[userId]) {
+          data.messages.push(message)
+          data.ids[userId] = true;
+        }
+        return data;
+      }, { messages: [], ids: {}})
+      .messages;
+    res.render('user/messages-with', { messages })
+  })
+  .catch(error => next(error));
 }
 
 

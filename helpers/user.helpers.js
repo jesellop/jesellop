@@ -1,8 +1,6 @@
-//const constants = require('../constants');
-
 module.exports = (hbs) => {
-  hbs.registerHelper('isAdmin', (user, options) => {
-    if (user.role === constants.ROLE_ADMIN) {
+  hbs.registerHelper('isUser', (message, session, options) => {
+    if (message.recipient._id.toString() === session._id.toString()) {
       return options.fn(this);
     } else {
       return options.inverse(this);

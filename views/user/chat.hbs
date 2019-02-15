@@ -15,7 +15,7 @@
     </div>
     <div class="card p-2">
         {{#each messages as |message|}}
-        <p class="chat-sender{{#if session }} chat-recipient{{/if}}">{{message.content}}</p>
+        <p class="{{#isUser message ../session }}chat-recipient{{else}} chat-sender{{/isUser}}">{{message.content}}</p>
         {{/each}}
     </div>
  </div>
@@ -24,8 +24,9 @@
     <form class="card p-2" action="/user/{{item._id}}" method="post">
         <div class="form-group">
             <textarea name="content" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Escriba aqui su mensaje"></textarea>
-        <input name="recipientId" type="text" value="{{ user._id }}" hidden>
+        <input name="recipient" type="text" value="{{ user._id }}" hidden>        
         </div>
         <button type="submit" class="btn btn-info mx-auto">Enviar</button>
     </form>
 </div>
+<div class="container py-5"></div>

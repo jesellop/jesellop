@@ -10,11 +10,10 @@ router.get('/list', usersController.list);
 router.get('/list-sold', usersController.listSold);
 
 router.get('/messages', usersController.messages);
-
-
 router.get('/:id/messages', usersController.createMessages);
 router.post('/:itemId', usersController.send);
-router.post('/:itemId/users/:userId/:senderId', usersController.chat);
+router.get('/:itemId/messages_with/:other_id', usersController.chat);
+router.post('/:id/itemMsgs', usersController.itemMsgs);
 
 router.get('/:id/profile', usersController.profiles);
 router.post('/:id/profile', upload.single('image'), usersController.editProfile);
