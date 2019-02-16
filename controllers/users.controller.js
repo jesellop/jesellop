@@ -4,6 +4,8 @@ const Sold = require('../models/sold.model');
 const Message = require('../models/messages.model');
 const PATH_PIC = '/uploads/'
 
+const Favourite = require('../models/favourite.model')
+
 module.exports.list =(req, res, next) => {
   Item.find({ "owner" : req.user.id })
   .then((items) => {
@@ -38,6 +40,7 @@ module.exports.editProfile = (req, res, next) => {
       res.redirect('/items' )
     })
     .catch(error => res.redirect('/user/list'))
+
 }
 
 module.exports.createMessages = (req, res, next) => {
@@ -126,22 +129,6 @@ module.exports.messagesWith = (req, res, next) => {
 }
 
 
-
-// module.exports.itemMsgs =(req, res, next) => {
-//   const itemMsgId = req.params.id;
-//   console.log("la id del item es " + itemMsgId)
-//   Message.find()
-//   Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
-//     .populate('item')
-//     .populate('sender')
-//     .populate('recipient')
-//     .then(messages => {
-//       res.render('user/messages', { messages })
-   
-//     })
-//     .catch(error => next(error));
-// }
-
 module.exports.itemMsgs =(req, res, next) => {
 const idItem = req.params.id;
 Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
@@ -162,3 +149,34 @@ Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
   })
   .catch(error => next(error));
 }
+
+  }
+
+  module.exports.favourite = (req, res, next) => {
+    Item.findById(req.params.id)
+      .then((item) => {
+        const favItem = new Favourite ({
+          item: item.id, client: req.user.id
+        })
+      favItem.save();
+    })
+    .then(res.redirect('/user/favourite'))
+    .catch(err => next(err))
+  }
+
+  module.exports.listFavourite =(req, res, next) => {
+    Favourite.find({ "client" : req.user.id })
+    .populate('item')
+    .then((fav) => {
+      res.render('user/favourites', { fav })
+    })
+    .catch(err => next(err))
+  }
+
+  module.exports.deleteFav = (req, res, next) => {
+    Favourite.findByIdAndDelete(req.params.id)
+      .then(() => res.redirect('/user/favourite'))
+      .catch(err => next(err))
+  }
+
+

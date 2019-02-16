@@ -6,12 +6,12 @@
                         <img id="img-user-sm" src="{{ user.image }}" alt="foto-perfil">
                         <h5 class="card-title pl-3">{{ user.alias }}</h5>  
                     </div>
-                    <div>
-                        <a href="#" class="btn btn-outline-danger badge-pill mr-2"><i class="fas fa-heart"></i></a>
+                     <div class="row">
+                        <form  action="/user/{{ item.id }}/favourite" method="post">
+                            <button class="mr-3 btn btn-outline-danger badge-pill"><i class="fas fa-heart"></i></button>
+                        </form>
                         <a href="/user/{{item._id}}/messages" class="btn btn-outline-info text-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</a>
                     </div>
-                    
-                </div>
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -47,12 +47,10 @@
                 </div>
                 <div class="card-body">
                     <p class="card-text font-weight-light"><i class="fas fa-map-marker-alt"> Dirección del Vendedor</i></p>
+                    <input class="mb-2" name="latitude" type="text" id="latitude" value="{{ item.location.coordinates.[1] }}">
+                    <input class="mb-2" name="longitude" type="text" id="longitude" value="{{ item.location.coordinates.[0] }}">   
                     <div id="map"></div>
                 </div>
-                 <input  name="latitude" type="text" id="latitude" value="{{ item.location.coordinates.[1] }}">
-                 <input  name="longitude" type="text" id="longitude" value="{{ item.location.coordinates.[0] }}">
-                <div id="map"></div>
-                
             </div>
         </div>
     </div> 

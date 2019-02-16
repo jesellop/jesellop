@@ -5,7 +5,7 @@ const sessionsController = require('../controllers/sessions.controller');
 
 router.get('/main', sessionsController.index);
 // router.post('/create', sessionsController.doCreate);
-// router.get('/delete', sessionsController.delete);
+router.get('/delete', sessionsController.delete);
 
 // router.post('/google', passport.authenticate('google-auth', { scope: ['openid', 'profile', 'email'] }));
  router.post('/facebook', passport.authenticate('facebook-auth', { scope: ['email'] }));
