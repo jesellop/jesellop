@@ -12,8 +12,8 @@ class Map {
     this.googleMap = new google.maps.Map(this.containerDomElement, {
       zoom: 5,
       center: {
-        lat: latSaved,
-        lng: lngSaved
+        lat: latSaved || 0,
+        lng: lngSaved || 0
       }
     });
   }

@@ -49,6 +49,24 @@ body {
   
 }
 
+
+.chat-sender{
+  font-size: 1.1em;
+  margin-left: auto;
+  margin-right: 1.3em;
+  background-color: aliceblue;
+  padding: 0.3em 1.3em;
+  border-radius: 30px;
+}
+
+.chat-recipient {
+  font-size: 1.1em;
+  margin-right: auto;
+  margin-left: 1.3em;
+  background-color: #e1f7ec;
+  padding: 0.3em 1.3em;
+  border-radius: 30px;
+
 .view{
   text-decoration: none !important;
   color: black;  
@@ -65,4 +83,5 @@ body {
 .heart {
   position: absolute;
   margin: 258px 10px 0 190px;
+
 }
