@@ -32,6 +32,7 @@ module.exports.doCreate = (req, res, next) => {
       type: 'Point',
       coordinates: [req.body.longitude, req.body.latitude]
     },
+    address: req.body.address,
     owner: req.user.id
     
   });
@@ -41,12 +42,6 @@ module.exports.doCreate = (req, res, next) => {
     console.log("Funciona el salvado de Items")
 }
 
-// module.exports.get =(req, res, next) => {
-//   Item.find({"owner": })
-//   .then((items) => res.render('user/list', { items }))
-//   .catch(err => next(err))
-//   console.log("Funciona el listado de Items de un ususario")
-// }
 
 module.exports.delete = (req, res, next) => {
   Item.findByIdAndDelete(req.params.id)

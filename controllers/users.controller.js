@@ -150,7 +150,7 @@ Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
   .catch(error => next(error));
 }
 
-  }
+  
 
   module.exports.favourite = (req, res, next) => {
     Item.findById(req.params.id)
