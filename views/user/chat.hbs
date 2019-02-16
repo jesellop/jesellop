@@ -15,7 +15,7 @@
     </div>
     <div class="card p-2">
         {{#each messages as |message|}}
-        <p class="chat-sender{{#if session }} chat-recipient{{/if}}">{{message.content}}</p><p> {{ user._id }}</p>
+        <p class="{{#isUser message ../session }}chat-recipient{{else}} chat-sender{{/isUser}}">{{message.content}}</p>
         {{/each}}
     </div>
  </div>
@@ -29,3 +29,4 @@
         <button type="submit" class="btn btn-info mx-auto">Enviar</button>
     </form>
 </div>
+<div class="container py-5"></div>

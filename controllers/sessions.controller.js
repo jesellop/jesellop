@@ -20,3 +20,8 @@ module.exports.createWithIDPCallback = (req, res, next) => {
     }
   })(req, res, next);
 }
+
+module.exports.delete = (req, res, next) => {
+  req.logout();
+  res.redirect('/items');
+}

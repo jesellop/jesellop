@@ -4,27 +4,21 @@
             <div class="col-12">
                 <h4 class="text-info">Tus mensajes {{ session.alias }}</h4>
                 <div class="mb-2">
-                    <a href="/user/messages" class="btn btn-outline-secondary active">Tus ventas</a>
-                    <a href="/user/messages-with" class="btn btn-outline-secondary  ml-1">Tus Compras</a>
+                    <a href="/user/messages" class="btn btn-outline-secondary">Tus ventas</a>
+                    <a href="/user/messages-with" class="btn btn-outline-secondary ml-1 active">Tus compras</a>
                 </div>
             </div>
-            
             {{#each messages as |message| }}
-
-            
             <div class="card col-12 mb-3">
                 <div class="row align-items-center">
                     <img class="img-list m-1" src="{{ item.images.[0]}}" alt="item-image">
                     <div class="ml-4 mt-1">
                         <h3> {{ item.name }}</h3>
                         <h5>{{ item.price }} €</h5>
-                        
+                        <p>{{recipient.name}}</p>
                     </div>
-                <div class="row mx-auto  align-items-center">
-                    <h3 class="card-title pr-3 text-info">{{ sender.alias }}</h3>
-                    <img id="img-user-sm" src="{{ sender.image }}" alt="foto-perfil">
-                </div>
-                    <form class="row ml-auto mr-3" action="/user/{{ item._id }}/messages_with/{{ sender._id }}" method="get">
+
+                    <form class="row ml-auto mr-3" action="/user/{{ item._id }}/messages_with/{{ recipient._id }}" method="get">
                         <button type="submit" class="btn btn-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</button>
                     </form>
                     
