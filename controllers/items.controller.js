@@ -5,32 +5,34 @@ const mongoose = require('mongoose');
 
 
 module.exports.list = (req, res, next) => {
-  const { name } = req.query
-  const criterial = {}
-  if (name) {
-    criterial.name = new RegExp(name, "i"); /.*${req.query.name}.*/
-  }
+  // const { name } = req.query
+  // const criterial = {}
+  // if (name) {
+  //   criterial.name = new RegExp(name, "i"); /.*${req.query.name}.*/
+  // }
 
-  const {longitude, latitude} = req.query
-  const location = {};
+  const {longitude, latitude} = req.query;
+  let location = {};
   if (longitude && latitude ){
-    location.coordinates = {
+    location = {
       location: {
          $near :
-           {             
-             $minDistance: 1000,
-              $maxDistance: 5000,
-             $geometry: { type: "Point",  coordinates: [ longitude, latitude] }
-
+           {
+            $geometry: {
+              type: "Point", 
+              coordinates: [ longitude, latitude]
+            },
+            $maxDistance: 5000,
+          },
            }
         }}
-    }
   
-
   Item.find(location)
-    .then((items) => res.render('auth/index', { items }))
+    .then((items) => {
+      console.log('esto es location ' + location)
+    console.log("Funciona el listado de Items", items.length)
+    res.render('auth/index', { items })})
     .catch(err => next(err))
-    console.log("Funciona el listado de Items")
 }
 
 module.exports.create = (req, res, next) => {

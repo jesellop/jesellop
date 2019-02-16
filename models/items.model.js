@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-
-
 const itemSchema = new mongoose.Schema({
   price: {
     type: Number,
@@ -23,14 +21,13 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: 'true'
   },
-  
+
   location: {
-    
-      type: {
-        type: String,
-        default : "Point"
-      },
-      coordinates: [Number]
+    type: {
+      type: String,
+      default: "Point"
+    },
+    coordinates: [Number]
   },
   address: {
     type: String,
@@ -43,7 +40,7 @@ const itemSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
+userSchema.index({ "location": "2dsphere" });
 
-  
-  const Item = mongoose.model('Item', itemSchema);
-  module.exports = Item;
+const Item = mongoose.model('Item', itemSchema);
+module.exports = Item;
