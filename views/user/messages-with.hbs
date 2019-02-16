@@ -1,21 +1,27 @@
-<section>
+<section> 
     <div class="container my-5">
         <div class="row justify-content-md-center">
             <div class="col-12">
-                <h5 class="text-info">{{ session.alias }} estas son las personas que han preguntado por tu producto</h5>
+                <h4 class="text-info">Tus mensajes {{ session.alias }}</h4>
+                <div class="mb-2">
+                    <a href="/user/messages" class="btn btn-outline-secondary">Tus ventas</a>
+                    <a href="/user/messages-with" class="btn btn-outline-secondary ml-1 active">Tus compras</a>
+                </div>
             </div>
             {{#each messages as |message| }}
             <div class="card col-12 mb-3">
                 <div class="row align-items-center">
-                    <img class="img-list m-1" src="{{ sender.image}}" alt="sender-image">
+                    <img class="img-list m-1" src="{{ item.images.[0]}}" alt="item-image">
                     <div class="ml-4 mt-1">
-                        <h3> {{ sender.alias }}</h3>
-                        <h5>Direccion: {{ sender.address }} </h5>
+                        <h3> {{ item.name }}</h3>
+                        <h5>{{ item.price }} €</h5>
+                        <p>{{recipient.name}}</p>
                     </div>
-                    <form class="row ml-auto mr-3" action="/user/{{ item._id }}/messages_with/{{ sender._id }}" method="get">
+
+                    <form class="row ml-auto mr-3" action="/user/{{ item._id }}/messages_with/{{ recipient._id }}" method="get">
                         <button type="submit" class="btn btn-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</button>
                     </form>
-
+                    
                 </div>  
             </div>
             {{/each}}

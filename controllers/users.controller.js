@@ -62,27 +62,6 @@ module.exports.send = (req, res, next) => {
     .catch(error => next(error))
 }
 
-module.exports.messages =(req, res, next) => {
-  Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
-    .populate('item')
-    .populate('sender')
-    .populate('recipient')
-    .then(messages => {
-      messages = messages.reduce((data, message) => {
-          const itemId = message.item.id;
-          if (!data.ids[itemId]) {
-            data.messages.push(message)
-            data.ids[itemId] = true;
-          }
-          return data;
-        }, { messages: [], ids: {}})
-        .messages;
-      res.render('user/messages', { messages })
-    })
-    .catch(error => next(error));
-}
-
-
 module.exports.chat =(req, res, next) => {
   Message.find({
     item: req.params.itemId,
@@ -94,34 +73,56 @@ module.exports.chat =(req, res, next) => {
     .populate('sender')
     .populate('recipient')
     .then(messages => {
-      
+        console.log('MSG=>', messages)
         const user = messages.find(m => m.sender._id.toString() === req.params.other_id).sender;
-        
         res.render('user/chat', { messages, item: messages[0].item, user })
     })
     .catch(error => next(error));
 }
 
 
-module.exports.itemMsgs =(req, res, next) => {
-const idItem = req.params.id;
-Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
+module.exports.messages =(req, res, next) => {
+  Message.find({ recipient: req.user.id })
   .populate('item')
   .populate('sender')
   .populate('recipient')
   .then(messages => {
-    messages = messages.reduce((data, message) => {
-        const userId = message.sender.id;
-        if (!data.ids[userId]) {
+    messages = messages
+      .filter(m => m.item.owner == req.user.id)
+      .reduce((data, message) => {
+        const itemId = message.item.id;
+        const senderId = message.sender.id;
+        if ((!data.ids[itemId]) || (!data.ids[senderId])) {
           data.messages.push(message)
-          data.ids[userId] = true;
+          data.ids[itemId] = true;
+          data.ids[senderId] = true;
         }
         return data;
-      }, { messages: [], ids: {}})
-      .messages;
-    res.render('user/messages-with', { messages })
+      }, { messages: [], ids: {} }).messages;
+    res.render('user/messages', { messages })
   })
   .catch(error => next(error));
+}
+
+module.exports.messagesWith = (req, res, next) => {
+  Message.find({ sender: req.user.id })
+    .populate('item')
+    .populate('sender')
+    .populate('recipient')
+    .then(messages => {
+      messages = messages
+        .filter(m => m.item.owner != req.user.id)
+        .reduce((data, message) => {
+          const itemId = message.item.id;
+          if (!data.ids[itemId]) {
+            data.messages.push(message)
+            data.ids[itemId] = true;
+          }
+          return data;
+        }, { messages: [], ids: {} }).messages;
+      res.render('user/messages-with', { messages })
+    })
+    .catch(error => next(error));
 }
 
 
