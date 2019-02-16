@@ -40,7 +40,7 @@ const itemSchema = new mongoose.Schema({
   }
 }, { timestamps: true });
 
-userSchema.index({ "location": "2dsphere" });
+itemSchema.index({ "location": "2dsphere" });
 
 const Item = mongoose.model('Item', itemSchema);
 module.exports = Item;
