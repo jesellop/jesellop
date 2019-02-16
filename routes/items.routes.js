@@ -2,6 +2,8 @@ const express = require('express');
 const multer = require('multer');
 const router = express.Router();
 const itemsController = require('../controllers/items.controller');
+const authMiddleware = require('../middlewares/auth.middleware');
+
 
 const upload = multer({ dest: './public/uploads/' });
 
@@ -11,12 +13,12 @@ router.get('/', itemsController.list);
 
 router.get('/:id/details', itemsController.details);
 
-router.get('/create', itemsController.create);
-router.post('/create', upload.array('images'), itemsController.doCreate);
+router.get('/create', authMiddleware.isAuthenticated, itemsController.create);
+router.post('/create', authMiddleware.isAuthenticated,upload.array('images'), itemsController.doCreate);
 
-router.post('/:id/delete', itemsController.delete);
-router.get('/:id/edit', itemsController.edit);
-router.post('/:id/doEdit', itemsController.doEdit);
+router.post('/:id/delete', authMiddleware.isAuthenticated, itemsController.delete);
+router.get('/:id/edit', authMiddleware.isAuthenticated,itemsController.edit);
+router.post('/:id/doEdit', authMiddleware.isAuthenticated, itemsController.doEdit);
 
 router.post('/:id/sold', itemsController.sold);
 
