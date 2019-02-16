@@ -11,7 +11,23 @@ module.exports.list = (req, res, next) => {
     criterial.name = new RegExp(name, "i"); /.*${req.query.name}.*/
   }
 
-  Item.find(criterial)
+  const {longitude, latitude} = req.query
+  const location = {};
+  if (longitude && latitude ){
+    location.coordinates = {
+
+         $near :
+           {             
+             $minDistance: 1000,
+              $maxDistance: 5000,
+             $geometry: { type: "Point",  coordinates: [ longitude, latitude] }
+
+           }
+        }
+    }
+  
+
+  Item.find(location)
     .then((items) => res.render('auth/index', { items }))
     .catch(err => next(err))
     console.log("Funciona el listado de Items")

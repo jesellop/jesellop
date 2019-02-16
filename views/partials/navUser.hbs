@@ -11,9 +11,12 @@
         </div>
         <p class="text-black-50 mb-0 pb-0">en</p>
         <div class="form-inline my-2 my-lg-0 input-group col-md-4">
-            <input type="search" class="form-control" placeholder="España" aria-label="Search" aria-describedby="button-place">
+            <div  id="map"></div>
+            <input type="text" id="latitude" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"/>
+            <input type="text" id="longitude" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"/>
+            <input id="address" type="textbox" name="address" class="form-control " placeholder="España">
             <div class="input-group-append">
-                <button class="btn btn-outline-info" type="submit" id="button-search"><i class="fas fa-map-marker-alt"></i></button>
+                <button class="btn btn-outline-info"type="button" value="Update Item Location" onclick="codeAddress()"><i class="fas fa-map-marker-alt"></i></button>
             </div>
         </div>
     </form>
