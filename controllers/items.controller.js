@@ -15,7 +15,7 @@ module.exports.list = (req, res, next) => {
   const location = {};
   if (longitude && latitude ){
     location.coordinates = {
-
+      location: {
          $near :
            {             
              $minDistance: 1000,
@@ -23,7 +23,7 @@ module.exports.list = (req, res, next) => {
              $geometry: { type: "Point",  coordinates: [ longitude, latitude] }
 
            }
-        }
+        }}
     }
   
 
