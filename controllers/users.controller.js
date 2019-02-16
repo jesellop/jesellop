@@ -126,3 +126,39 @@ module.exports.messagesWith = (req, res, next) => {
 }
 
 
+
+// module.exports.itemMsgs =(req, res, next) => {
+//   const itemMsgId = req.params.id;
+//   console.log("la id del item es " + itemMsgId)
+//   Message.find()
+//   Message.find({$or: [{recipient: req.user.id}, {sender: req.user.id}]})
+//     .populate('item')
+//     .populate('sender')
+//     .populate('recipient')
+//     .then(messages => {
+//       res.render('user/messages', { messages })
+   
+//     })
+//     .catch(error => next(error));
+// }
+
+module.exports.itemMsgs =(req, res, next) => {
+const idItem = req.params.id;
+Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
+  .populate('item')
+  .populate('sender')
+  .populate('recipient')
+  .then(messages => {
+    messages = messages.reduce((data, message) => {
+        const userId = message.sender.id;
+        if (!data.ids[userId]) {
+          data.messages.push(message)
+          data.ids[userId] = true;
+        }
+        return data;
+      }, { messages: [], ids: {}})
+      .messages;
+    res.render('user/messages', { messages })
+  })
+  .catch(error => next(error));
+}

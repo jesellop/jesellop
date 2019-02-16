@@ -18,4 +18,7 @@ router.get('/messages-with', usersController.messagesWith);
 router.get('/:id/profile', usersController.profiles);
 router.post('/:id/profile', upload.single('image'), usersController.editProfile);
 
+router.post('/:id/itemMsgs', usersController.itemMsgs);
+
+
 module.exports = router;
