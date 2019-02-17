@@ -85,8 +85,9 @@ module.exports.doEdit = (req, res, next) => {
 }
 
 module.exports.details = (req, res, next) => {
-  Item.findById(req.params.id)
+  Item.findByIdAndUpdate(req.params.id, { $inc: { views: +1} })
     .then(item => {
+      
       User.findById(item.owner)
         .then((user) => res.render('auth/item', { item, user }))
         .catch(err => next(err))
