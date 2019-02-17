@@ -88,12 +88,12 @@ body {
 
 }
 
-.clicked-heart {
-  display: none;
+#clicked-heart {
+  background-color: blue
 
 }
 
-.heart-noncliked {
-  display: none,
+#heart-noncliked {
+  background-color: red
   
 }

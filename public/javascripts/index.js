@@ -69,15 +69,62 @@ function setMapOnAll(map) {
 }
 
 
-$(".heart-nonclicked").click(function(event) {
+// $(".heart-nonclicked").click(function(event) {
  
-  const heartBtn = event.target;
-  $(heartBtn).toggleClass("clicked-heart") 
+//   const heartBtn = event.target;
+//   $(heartBtn).toggleClass("clicked-heart") 
 
   
-  if ($(favIcon).hasClass("clicked-heart")) {
-   axios.post(`/user/{{ item.id }}???/favourite`)
+//   if ($(favIcon).hasClass("clicked-heart")) {
+//    axios.post(`/user/{{ item.id }}???/favourite`)
     
-  }
- ​
- });
+//   }
+//  ​
+//  });
+
+
+document.getElementById("heart-nonclicked").onsubmit = function() {
+  
+  document.getElementById("heart-nonclicked").toggleClass("heart-clicked")
+ 
+  if (document.getElementById("to do").hasClass("heart-clicked")) {
+   axios.post(`user/${id}/favourite`, body)
+     .then(response => {
+         console.log('post done, response is: ',response );
+     })
+     .catch(error => {
+         console.log('error: ', error);  
+     })
+ } 
+}
+
+
+
+
+// $(".fav-btn").click(function(event) {
+  
+//   const favIcon = event.target;
+//   /* console.log("entroo", this)
+//   console.log("entroo", favIcon)
+//   //debugger;
+//   const articleId = favIcon.dataset.value;
+//   console.log("y value", articleId) */
+  
+//   $(favIcon).toggleClass("fav-selected")
+//   //linkFav.firstChild.addClass("selected");
+//   const articleId = favIcon.dataset.value;
+//   if ($(favIcon).hasClass("fav-selected")) {
+    
+//     console.log("y ahora en el if")
+    
+//     axios.post(`/articles/${articleId}/addToFav`)
+//       .then(() => console.log("ok"))
+//       .catch(err => console.log(err))
+//   } else {
+//     axios.post(`/articles/${articleId}/removeFromFav`)
+//     .then(() => console.log("ok"))
+//     .catch(err => console.log(err))
+//   }
+
+// });
+
