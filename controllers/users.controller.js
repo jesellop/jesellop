@@ -168,7 +168,7 @@ Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
   .catch(error => next(error));
 }
 
-  //, { $inc: { views: +1} }
+
 
   module.exports.favourite = (req, res, next) => {
     Item.findByIdAndUpdate(req.params.id, { $inc: { favourites: +1} })

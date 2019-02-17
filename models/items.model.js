@@ -33,18 +33,20 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: 'true'
   },
+  favourites: {
+    type: Number,
+    default: 0,
+    required: true
+  },
+  views: {
+    type: Number,
+    default: 0,
+    required: true
+  },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
-  favourites: {
-    type: Number,
-    default: 0
-  },
-  views: {
-    type: Number,
-    default: 0
   }
 }, { timestamps: true });
 
