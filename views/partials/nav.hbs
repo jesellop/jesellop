@@ -2,22 +2,25 @@
     <a class="navbar-brand mr-1 ml-3" href="/items">
         <img src="/images/logo-jesellop.png" width="40" height="40" alt="logo">
     </a>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <form action="/items" method="get" class="collapse navbar-collapse" id="search">
         <div class="form-inline my-2 my-lg-0 input-group col-md-3">
-            <input type="search" class="form-control" placeholder="Buscar" aria-label="Search" aria-describedby="button-product">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-info" type="button" id="button-search"><i class="fas fa-search"></i></button>
-                </div>
+            <input name="name" type="search" class="form-control" placeholder="Buscar" value="{{ search.name }}">
         </div>
-        
         <p class="text-black-50 mb-0 pb-0">en</p>
         <div class="form-inline my-2 my-lg-0 input-group col-md-3">
-            <input type="search" class="form-control" placeholder="España" aria-label="Search" aria-describedby="button-place">
+            <div hidden id="map-nav"></div>
+            <input hidden type="text" id="latitude-nav" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"/>
+            <input hidden type="text" id="longitude-nav" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"/>
+            <input id="address-nav" type="textbox" name="address" class="form-control" placeholder="España">
             <div class="input-group-append">
-                <button class="btn btn-outline-info" type="button" id="pac-input"><i class="fas fa-map-marker-alt"></i></button>
+                <button class="btn btn-outline-info"type="button" value="Update Item Location" onclick="codeAddressS()">Aplicar</button>
             </div>
+             
         </div>
-    </div>
+        <div class="input-group-append">
+                <button class="btn btn-outline-info" type="submit" value="Update Item Location" onclick="codeAddressS()"><i class="fas fa-search"></i></button>
+            </div>
+    </form>
     <form class="form-inline mr-3" action="/auth/facebook" method="post">
         <button type="submit" class="btn btn-info badge-pill px-3"><i class="fab fa-facebook px-2"></i>Inicia sesion con Facebook</button>
     </form>

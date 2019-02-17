@@ -5,18 +5,15 @@
     <form action="/items" method="get" class="collapse navbar-collapse" id="search">
         <div class="form-inline my-2 my-lg-0 input-group col-md-3">
             <input name="name" type="search" class="form-control" placeholder="Buscar" value="{{ search.name }}">
-            {{!-- <div class="input-group-append">
-                <button class="btn btn-outline-info" type="submit" id="button-search"><i class="fas fa-search"></i></button>
-            </div> --}}
         </div>
         <p class="text-black-50 mb-0 pb-0">en</p>
         <div class="form-inline my-2 my-lg-0 input-group col-md-4">
             <div hidden id="map-nav"></div>
             <input hidden type="text" id="latitude-nav" class="form-control" name="latitude" value="{{ session.location.coordinates.[1] }}"/>
             <input hidden type="text" id="longitude-nav" class="form-control" name="longitude" value="{{ session.location.coordinates.[0] }}"/>
-            <input id="address-nav" type="textbox" name="address" class="form-control {{#if isAddress}} bg-success{{/if}}" placeholder="España">
+            <input id="address-nav" type="textbox" name="address" class="form-control" placeholder="España">
             <div class="input-group-append">
-                <button class="btn btn-outline-info{{#if button}} bg-success{{/if}}"type="button" value="Update Item Location" onclick="codeAddressS()">Aplicar</button>
+                <button class="btn btn-outline-info"type="button" value="Update Item Location" onclick="codeAddressS()">Aplicar</button>
             </div>
              
         </div>
