@@ -16,6 +16,10 @@
                         <p>{{ item.name }}</p>
                     </div>
                     <div class="row ml-auto mr-2">
+                        <div class="row h3 mr-5 font-weight-light">
+                            <p class="text-black-50 mr-4"><i class="font-weight-light fas fa-eye "></i> {{ item.views }}</p>
+                            <p class="text-black-50"><i class="font-weight-light fas fa-heart "></i> {{ item.favourites }}</p>
+                        </div>
                         <form  action="/items/{{item._id}}/sold" method="post">
                             <button class="btn btn-outline-success mr-2"><i class="fas fa-check"></i></button>
                         </form>

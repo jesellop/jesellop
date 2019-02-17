@@ -168,10 +168,10 @@ Message.find({$and: [{recipient: req.user.id}, {"item": idItem}]})
   .catch(error => next(error));
 }
 
-  
+  //, { $inc: { views: +1} }
 
   module.exports.favourite = (req, res, next) => {
-    Item.findById(req.params.id)
+    Item.findByIdAndUpdate(req.params.id, { $inc: { favourites: +1} })
       .then((item) => {
         const favItem = new Favourite ({
           item: item.id, client: req.user.id
