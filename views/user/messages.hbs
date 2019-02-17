@@ -15,12 +15,11 @@
             <div class="card col-12 mb-3">
                 <div class="row align-items-center">
                     <img class="img-list m-1" src="{{ item.images.[0]}}" alt="item-image">
-                    <div class="ml-4 mt-1">
+                    <div class="col-6 ml-4 mt-1">
                         <h3> {{ item.name }}</h3>
                         <h5>{{ item.price }} €</h5>
-                        
-                    </div>
-                <div class="row mx-auto  align-items-center">
+                    </div>                   
+                <div class="row ml-auto align-items-center">
                     <h3 class="card-title pr-3 text-info">{{ sender.alias }}</h3>
                     <img id="img-user-sm" src="{{ sender.image }}" alt="foto-perfil">
                 </div>
