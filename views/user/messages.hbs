@@ -24,7 +24,7 @@
                     <h3 class="card-title pr-3 text-info">{{ sender.alias }}</h3>
                     <img id="img-user-sm" src="{{ sender.image }}" alt="foto-perfil">
                 </div>
-                    <form class="row ml-auto mr-3" action="/user/{{ item._id }}/messages_with/{{ sender._id }}" method="get">
+                    <form class="row ml-auto mr-3" action="/user/{{ item._id }}/messages_withS/{{ sender._id }}" method="get">
                         <button type="submit" class="btn btn-info badge-pill px-3"><i class="fas fa-comments px-2"></i>Chat</button>
                     </form>
                     

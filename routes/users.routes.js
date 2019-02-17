@@ -14,7 +14,8 @@ router.get('/messages', usersController.messages);
 router.get('/:id/messages', authMiddleware.isAuthenticated, usersController.createMessages);
 
 router.post('/:itemId', usersController.send);
-router.get('/:itemId/messages_with/:other_id', usersController.chat);
+router.get('/:itemId/messages_withS/:other_id', usersController.chatS);
+router.get('/:itemId/messages_withR/:other_id', usersController.chatR);
 router.get('/messages-with', usersController.messagesWith);
 
 router.get('/:id/profile', authMiddleware.isAuthenticated, usersController.profiles);

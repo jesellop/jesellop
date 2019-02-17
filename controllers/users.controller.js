@@ -65,7 +65,25 @@ module.exports.send = (req, res, next) => {
     .catch(error => next(error))
 }
 
-module.exports.chat =(req, res, next) => {
+module.exports.chatR =(req, res, next) => {
+  Message.find({
+    item: req.params.itemId,
+    $or: [
+      {recipient: req.user.id, sender: req.params.other_id}, 
+      {sender: req.user.id, recipient: req.params.other_id}
+    ]})
+    .populate('item')
+    .populate('sender')
+    .populate('recipient')
+    .then(messages => {
+        console.log('MSG=>', messages)
+        const user = messages.find(m => m.recipient._id.toString() === req.params.other_id).recipient;
+        res.render('user/chat', { messages, item: messages[0].item, user })
+    })
+    .catch(error => next(error));
+}
+
+module.exports.chatS =(req, res, next) => {
   Message.find({
     item: req.params.itemId,
     $or: [
