@@ -4,7 +4,7 @@
         {{#each items as |item|}}
         <a href="/items/{{item.id}}/details" id="{{item.id}}" class="view card mx-2 mb-3" style="width: 15rem">
             <form class="heart" action="/user/{{ item.id }}/favourite" method="post">
-                <button class="btn btn-outline-danger badge-pill"><i class="fas fa-heart"></i></button>
+                <button class=" heart-noncliked"><i class="fas fa-heart"></i></button>
             </form>
             <img src="{{item.images.[0]}}" class="card-img p-1" style="" alt="product-image">
             <div class="p-2">

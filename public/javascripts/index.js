@@ -67,3 +67,17 @@ function setMapOnAll(map) {
     markers[i].setMap(map);
   }
 }
+
+
+$(".heart-nonclicked").click(function(event) {
+ 
+  const heartBtn = event.target;
+  $(heartBtn).toggleClass("clicked-heart") 
+
+  
+  if ($(favIcon).hasClass("clicked-heart")) {
+   axios.post(`/user/{{ item.id }}???/favourite`)
+    
+  }
+ ​
+ });

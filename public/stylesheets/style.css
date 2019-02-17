@@ -84,5 +84,16 @@ body {
 .heart {
   position: absolute;
   margin: 258px 10px 0 190px;
+  
 
+}
+
+.clicked-heart {
+  display: none;
+
+}
+
+.heart-noncliked {
+  display: none,
+  
 }
