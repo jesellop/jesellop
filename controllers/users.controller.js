@@ -2,7 +2,7 @@ const Item = require('../models/items.model');
 const User = require('../models/users.model');
 const Sold = require('../models/sold.model');
 const Message = require('../models/messages.model');
-const PATH_PIC = '/uploads/'
+
 
 const Favourite = require('../models/favourite.model')
 
@@ -29,7 +29,7 @@ module.exports.profiles =(req, res, next) => {
   res.render('user/profile');
 }
 
-const hasFile = (file, body) => file && (body['image'] = `${PATH_PIC}${file.filename}`)
+const hasFile = (file, body) => file && (body['image'] = `${file.secure_url}`)
 
 module.exports.editProfile = (req, res, next) => {
   const { body, file } = req
@@ -39,7 +39,7 @@ module.exports.editProfile = (req, res, next) => {
       console.log("profiled edited", user) 
       res.redirect('/items' )
     })
-    .catch(error => res.redirect('/user/list'))
+    .catch(err => next(err))
 
 }
 

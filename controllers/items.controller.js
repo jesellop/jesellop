@@ -40,7 +40,8 @@ module.exports.doCreate = (req, res, next) => {
     price: req.body.price,
     category: req.body.category,
     description: req.body.description,
-    images: req.files.map(f => f.path.replace('public', '')),
+    // images: req.files.map(f => f.path.replace('public', '')),
+    images: req.files ? req.files.map(file => file.secure_url) : '',
     location: {
       type: 'Point',
       coordinates: [req.body.longitude, req.body.latitude]

@@ -2,6 +2,8 @@ const passport = require('passport');
 const express = require('express');
 const router = express.Router();
 const sessionsController = require('../controllers/sessions.controller');
+const uploadCloud = require('../configs/cloudinary.js');
+
 
 router.get('/main', sessionsController.index);
 // router.post('/create', sessionsController.doCreate);
