@@ -3,8 +3,11 @@
     <div class="container mt-5">
         <div class="row justify-content-md-center">
             <div class="col-12 mb-3">
-                <h2>Tus productos Vendidos</h2>
-                <a href="/user/list" class="text-info">Productos que tienes en venta actualmente</a>
+                <h4 class="text-info">Tus productos {{session.alias}}</h4>
+                <div class="mb-2">
+                    <a href="/user/list" class="btn btn-outline-secondary">En venta</a>
+                    <a href="/user/list-sold" class="btn btn-outline-secondary ml-1 active">Vendidos</a>
+                </div>
             </div>
             {{#each sold as |sold| }}
             <div class="card col-12 mb-3">
