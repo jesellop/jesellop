@@ -2,7 +2,7 @@
     <div class="container mt-5">
         <div class="row justify-content-md-center">
             <div class="col-12 mb-3">
-                <h5 class="text-info">Tus productos Favoritos</h5>
+                <h4 class="text-info">Tus productos Favoritos {{ session.alias }}</h4>
             </div>
             {{#each fav as |fav| }}
             <div class="card col-12 mb-3">
@@ -10,7 +10,7 @@
                     <img class="img-list m-1" src="{{item.images.[0]}}" alt="">
                     <div class="ml-4 mt-1">
                         <h3>{{ item.name }}</h3>
-                        <p>{{ item.price }}</p>
+                        <p>{{ item.price }} €</p>
                     </div>
                     <div class="row ml-auto mr-2">
                         <form  action="/items/{{item.id}}/details" method="get">
